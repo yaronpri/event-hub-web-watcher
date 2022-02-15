@@ -6,5 +6,14 @@ namespace event_hub_web_watcher
     {
         [JsonProperty]
         public long MessageCount { get; set; }
+
+        [JsonProperty]
+        public string ConsumerGroup { get; set; }
+
+        [JsonProperty]
+        public string EventHubName { get; set; }
+
+        [JsonProperty]
+        public string HostName { get; set; }
     }
 }

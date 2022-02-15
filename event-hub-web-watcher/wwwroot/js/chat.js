@@ -1,13 +1,13 @@
 ﻿"use strict";
 
-/*window.setInterval(function () {
+window.setInterval(function () {
 
-    showOrderQueue(50);
+    showOrderQueue();
 
-}, 2000);*/
-showOrderQueue(50);
+}, 5000);
+//showOrderQueue(50);
 
-function showOrderQueue(nrMessages) {
+function showOrderQueue() {
 
     fetch("/api/v1/metrics/")
         .then(function (response) {
@@ -44,7 +44,7 @@ function showOrderQueue(nrMessages) {
 
                 const yScale = d3.scaleLinear()
                     .range([height, 0])
-                    .domain([0, 500]);
+                    .domain([0, 10000]);
 
                 // vertical grid lines
                 // const makeXLines = () => d3.axisBottom()
@@ -95,21 +95,21 @@ function showOrderQueue(nrMessages) {
                     .attr('y', margin / 2.4)
                     .attr('transform', 'rotate(-90)')
                     .attr('text-anchor', 'middle')
-                    .text('Nr of messages');
+                    .text('Num. of messages');
 
                 svg.append('text')
                     .attr('class', 'label')
                     .attr('x', width / 2 + margin)
                     .attr('y', height + margin * 1.7)
                     .attr('text-anchor', 'middle')
-                    .text('EventHub Unprocessed messages');
+                    .text('Unprocessed messages=' + data.messageCount);
 
                 svg.append('text')
                     .attr('class', 'title')
                     .attr('x', width / 2 + margin)
                     .attr('y', 40)
                     .attr('text-anchor', 'middle')
-                    .text('EventHub Unprocessed messages');
+                    .text(data.hostName + '/' + data.eventHubName + '/' + data.consumerGroup);
             });
         });
 

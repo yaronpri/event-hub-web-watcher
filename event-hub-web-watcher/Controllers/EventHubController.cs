@@ -73,7 +73,10 @@ namespace event_hub_web_watcher
         {
             EventHubStatus retVal = new EventHubStatus()
             {
-                MessageCount = 0
+                MessageCount = 0,
+                ConsumerGroup = _consumerGroup,
+                HostName = _fullyQualifiedNamespace,
+                EventHubName = _eventhubName
             };
             
             var checkpointBlobsPrefix = CheckpointPrefix();
