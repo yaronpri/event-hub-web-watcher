@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>event_hub_web_watcher</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Azure.Messaging.EventHubs.Processor" />
+    <None Remove="Microsoft.Azure.Management.EventHub" />
+    <None Remove="Azure.Messaging.EventHubs" />
+    <None Remove="Microsoft.Azure.EventHubs" />
+    <None Remove="Controllers\" />
+    <None Remove="Azure.Storage.Blobs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.3.2" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\js\signalr\" />
+    <Folder Include="wwwroot\js\signalr\dist\" />
+    <Folder Include="wwwroot\js\signalr\dist\browser\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\signalr\" />
+    <Content Remove="wwwroot\js\signalr\dist\" />
+    <Content Remove="wwwroot\js\signalr\dist\browser\" />
+  </ItemGroup>
+</Project>
