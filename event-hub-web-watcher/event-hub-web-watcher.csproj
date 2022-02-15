@@ -27,7 +27,5 @@
     <Content Remove="wwwroot\js\signalr\" />
     <Content Remove="wwwroot\js\signalr\dist\" />
     <Content Remove="wwwroot\js\signalr\dist\browser\" />
-    <Content Remove="appsettings.Development.json" />
-    <Content Remove="appsettings.Development.json" />
   </ItemGroup>
 </Project>

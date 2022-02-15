@@ -20,10 +20,14 @@ namespace event_hub_web_watcher
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                    {
+                        config.AddEnvironmentVariables();
+                    });
                     webBuilder.ConfigureLogging((hostBuilderContext, loggingBuilder) =>
                     {
                         loggingBuilder.AddConsole(consoleLoggerOptions => consoleLoggerOptions.TimestampFormat = "[HH:mm:ss]");
-                    });
+                    });            
                     webBuilder.UseStartup<Startup>();
                 });
     }

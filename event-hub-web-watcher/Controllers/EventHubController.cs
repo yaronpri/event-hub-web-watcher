@@ -45,15 +45,13 @@ namespace event_hub_web_watcher
         private const string OffesetMetadataKey = "offset";
         private const string ServiceBusHostName = ".servicebus.windows.net";
 
-
-
         public MetricsController(IConfiguration configuration, ILogger<MetricsController> logger)
         {
             Configuration = configuration;
             Logger = logger;
-            _connectionString = Configuration.GetValue<string>("EventHub:ConnectionString");
-            _eventhubName = Configuration.GetValue<string>("EventHub:Name");
-            _consumerGroup = Configuration.GetValue<string>("EventHub:ConsumerGroup");
+            _connectionString = Configuration.GetValue<string>("EventHubConnectionString");
+            _eventhubName = Configuration.GetValue<string>("EventHubName");
+            _consumerGroup = Configuration.GetValue<string>("EventHubConsumerGroup");
 
             int index = _connectionString.IndexOf(ServiceBusHostName);
             int start = "Endpoint=sb://".Length;
@@ -62,8 +60,8 @@ namespace event_hub_web_watcher
             string fullConnectionString = _connectionString + ";EntityPath=" + _eventhubName;
             _eventhubClient = EventHubClient.CreateFromConnectionString(fullConnectionString);
 
-            _checkpointConnectionString = Configuration.GetValue<string>("CheckPoint:ConnectionString");
-            _checkpointContainerName = Configuration.GetValue<string>("CheckPoint:Container");
+            _checkpointConnectionString = Configuration.GetValue<string>("CheckPointConnectionString");
+            _checkpointContainerName = Configuration.GetValue<string>("CheckPointContainer");
             _checkpointContainerClient = new BlobContainerClient(_checkpointConnectionString, _checkpointContainerName);
         }
 
@@ -86,23 +84,6 @@ namespace event_hub_web_watcher
             {               
                 retVal.MessageCount += await UnprocessedMessageInPartition(partitionId);
             }
-
-            //var ss = _checkpointContainerClient.GetBlobs();
-
-            //foreach (BlobItem item in ss)
-            /*await foreach (BlobItem item in _checkpointContainerClient.GetBlobsAsync(
-                traits: BlobTraits.Metadata, prefix: checkpointBlobsPrefix, cancellationToken: defaultToken).ConfigureAwait(false))
-            {           
-                string strSeqNum, strOffset;
-                if ((item.Metadata.TryGetValue(SequenceNumberMetadataKey, out strSeqNum)) && (item.Metadata.TryGetValue(OffesetMetadataKey, out strOffset)))
-                {
-                    long seqNum, offset;
-                    if ((long.TryParse(strSeqNum, out seqNum)) && (long.TryParse(strOffset, out offset)))
-                    {
-                        Logger.LogInformation("Got metadata " + item.Name + " seq=" + seqNum, " offset=" + offset);
-                    }                        
-                }
-            }*/
 
             return retVal;
         }
