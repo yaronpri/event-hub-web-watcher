@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+    paths: 'event-hub-web-watcher/**' 
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Docker Login
+      uses: docker/login-action@v1.6.0
+      with:
+        username: yaronpr
+        password: ${{ secrets.DOCKERHUB }}      
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build ./event-hub-web-watcher/ --file event-hub-web-watcher/Dockerfile --tag yaronpr/event-hub-web-watcher:latest
+    - name: Push the Docker image
+      run: docker push yaronpr/event-hub-web-watcher:latest
